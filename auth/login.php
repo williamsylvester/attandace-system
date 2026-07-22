@@ -8,24 +8,20 @@ if (Auth::isLoggedIn()) {
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!Security::verifyCsrfToken($_POST['csrf_token'] ?? null)) {
-        $errors[] = 'Invalid session token. Please try again.';
+    $login = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    $v = new Validator();
+    $v->required($login, 'login')->required($password, 'password');
+
+    if ($v->hasErrors()) {
+        $errors = array_values($v->getErrors());
     } else {
-        $login = trim($_POST['email'] ?? '');
-        $password = $_POST['password'] ?? '';
-
-        $v = new Validator();
-        $v->required($login, 'login')->required($password, 'password');
-
-        if ($v->hasErrors()) {
-            $errors = array_values($v->getErrors());
+        $auth = new Auth();
+        if ($auth->attemptLogin($login, $password)) {
+            redirect('/dashboard.php');
         } else {
-            $auth = new Auth();
-            if ($auth->attemptLogin($login, $password)) {
-                redirect('/dashboard.php');
-            } else {
-                $errors[] = 'Invalid email/username or password.';
-            }
+            $errors[] = 'Invalid email/username or password.';
         }
     }
 }
@@ -47,7 +43,6 @@ require_once __DIR__ . '/../includes/header.php';
       <?php endforeach; ?>
 
       <form method="POST" novalidate>
-        <input type="hidden" name="csrf_token" value="<?= Security::generateCsrfToken() ?>">
         <div class="mb-3">
           <label class="form-label">Email address or username</label>
           <input type="text" name="email" class="form-control" required autofocus
