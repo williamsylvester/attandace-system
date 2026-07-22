@@ -1,0 +1,54 @@
+body {
+    background-color: #f4f6f9;
+}
+
+.app-navbar {
+    background: linear-gradient(90deg, #1e3a5f, #2c5f8a);
+}
+
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e3a5f, #2c5f8a);
+}
+
+.login-card {
+    max-width: 420px;
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.stat-card {
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-card .stat-icon {
+    font-size: 2.2rem;
+    opacity: 0.85;
+}
+
+.bg-navy { background: #1e3a5f; }
+.bg-teal { background: #147d64; }
+.bg-orange { background: #d97b1f; }
+.bg-purple { background: #6a3fa0; }
+
+.card {
+    border-radius: 12px;
+    border: 1px solid #e7eaf0;
+}
+
+.table thead {
+    background-color: #1e3a5f;
+    color: #fff;
+}
+
+@media print {
+    .no-print { display: none !important; }
+}
